@@ -1,0 +1,22 @@
+[Unit]
+Description=Radio1 Discord and Spotify bot
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=localhost/radio1:current
+ContainerName=radio1
+EnvironmentFile=%h/radio1/.env
+Environment=DATABASE_PATH=/app/data/radio1.db
+Environment=WEB_HOST=0.0.0.0
+Environment=WEB_PORT=5000
+Network=proxy.network
+Volume=%h/radio1/data:/app/data:Z
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=300
+
+[Install]
+WantedBy=default.target

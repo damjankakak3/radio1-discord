@@ -1,0 +1,23 @@
+http:
+  routers:
+    radio1:
+      rule: "Host(`radio.example.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - radio1-privacy@file
+      service: radio1
+      tls:
+        certResolver: letsencrypt
+      observability:
+        accessLogs: false
+  services:
+    radio1:
+      loadBalancer:
+        servers:
+          - url: "http://radio1:5000"
+  middlewares:
+    radio1-privacy:
+      headers:
+        referrerPolicy: no-referrer
+        customFrameOptionsValue: DENY

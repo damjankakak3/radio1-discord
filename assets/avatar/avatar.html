@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Radio1 pixel logo</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --background: oklch(0.235 0.019 155);
+        --cream: oklch(0.963 0.019 105);
+        --mint: oklch(0.825 0.119 151);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: var(--background); }
+      canvas {
+        display: block;
+        width: min(100vw, 100vh);
+        height: min(100vw, 100vh);
+        image-rendering: pixelated;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="avatar" width="32" height="32" role="img"
+      aria-label="Minimal pixel logo: a cream number one with two mint radio signal strokes on dark green">
+      Radio1 pixel logo.
+    </canvas>
+    <script>
+      // Three flat colors on a 32 × 32 grid, with space around the mark.
+      const canvas = document.querySelector('#avatar');
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      context.imageSmoothingEnabled = false;
+      const styles = getComputedStyle(document.documentElement);
+      const palette = Object.fromEntries(['background', 'cream', 'mint'].map(name => [
+        name, styles.getPropertyValue(`--${name}`).trim(),
+      ]));
+
+      function rect(x, y, width, height, color) {
+        context.fillStyle = palette[color];
+        context.fillRect(x, y, width, height);
+      }
+
+      rect(0, 0, 32, 32, 'background');
+
+      // A broad stem, stepped shoulder, and firm baseline make a custom "1".
+      rect(11, 8, 4, 16, 'cream');
+      rect(9, 9, 2, 3, 'cream');
+      rect(7, 11, 2, 3, 'cream');
+      rect(7, 23, 12, 3, 'cream');
+
+      // Both signal strokes follow the same two-pixel step rhythm.
+      rect(17, 12, 2, 3, 'mint');
+      rect(19, 14, 2, 4, 'mint');
+      rect(17, 17, 2, 3, 'mint');
+
+      rect(21, 9, 2, 3, 'mint');
+      rect(23, 11, 2, 3, 'mint');
+      rect(25, 13, 2, 6, 'mint');
+      rect(23, 18, 2, 3, 'mint');
+      rect(21, 20, 2, 3, 'mint');
+
+      document.documentElement.dataset.ready = 'true';
+    </script>
+  </body>
+</html>
